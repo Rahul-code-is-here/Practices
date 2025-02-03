@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete User</title>
+    <link rel="stylesheet" href="/Pizza_Shop/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Pizza_Shop/css/style.css">
+    
+    <script src="/Pizza_Shop/js/bootstrap.bundle.min.js"></script>
+    <style>
+        #main-content {
+            transition: margin-left 0.3s;
+        }
+
+        .offcanvas.show~#main-content {
+            margin-left: 250px;
+        }
+
+        .offcanvas-backdrop.show {
+            background-color: transparent;
+        }
+
+        @media (max-width: 700px) {
+            .offcanvas.show~#main-content {
+                margin-left: 0;
+            }
+
+            .offcanvas {
+                width: 250px;
+                position: fixed;
+                top: 0;
+                left: -250px;
+                transition: left 0.3s;
+            }
+
+            .offcanvas.show {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button -->
+            <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                aria-controls="sidebar">
+                ☰
+            </button>
+            <a class="navbar-brand ms-3" href="#"><img src="/Pizza_Shop/images/account.png" height="35px" width="35px"
+                    alt=""></a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="offcanvas d-lg-block offcanvas-start bg-light" style="width: 233px;" id="sidebar">
+        <div class="offcanvas-header">
+            <img src="/Pizza_Shop/images/logos/pizzashop_logo.png" height="38px" width="38px" alt="">
+            <h5 class="offcanvas-title ms-2">PIZZASHOP</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav flex-column">
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-danger d-flex align-items-center" href="dashboard.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-border-all" viewBox="0 0 16 16">
+                            <path d="M0 0h16v16H0zm1 1v6.5h6.5V1zm7.5 0v6.5H15V1zM15 8.5H8.5V15H15zM7.5 15V8.5H1V15z" />
+                        </svg>
+                        <span class="ms-2">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="UserList.html">
+                        <img src="images/user.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="Permission.html">
+                        <img src="images/key.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Role And Permission</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="menu.html">
+                        <img src="images/menu.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Menu</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#user">
+                        <img src="images/icons8-rectangle-50.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Table and Section</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#maintenance">
+                        <img src="images/tax.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Taxes and Fees</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#maintenance">
+                        <img src="images/icons8-order-50.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Order</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#settings">
+                        <img src="images/client_5895695.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Customer</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4" id="main-content">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+        <div class="container mt-5">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                Delete Item
+            </button>
+        </div>
+
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <i class="fas fa-exclamation-triangle warning-icon"></i>
+                        <p class="mb-0">Are you sure you want to delete this User?</p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-primary text-white" onclick="confirmAction()">
+                            <i class="fas fa-trash-alt me-2"></i>Yes
+                        </button>
+                        <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

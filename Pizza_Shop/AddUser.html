@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New User</title>
+  <link rel="stylesheet" href="/Pizza_Shop/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/Pizza_Shop/css/style.css">
+ 
+  <script src="/Pizza_Shop/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <!-- Sidebar Toggle Button -->
+      <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+        aria-controls="sidebar">
+        ☰
+      </button>
+      <a class="navbar-brand ms-3" href="#"><img src="/Pizza_Shop/images/account.png" height="35px" width="35px"
+          alt=""></a>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <div class="offcanvas d-lg-block offcanvas-start bg-light" style="width: 233px;" id="sidebar">
+    <div class="offcanvas-header">
+      <img src="/Pizza_Shop/images/logos/pizzashop_logo.png" height="38px" width="38px" alt="">
+      <h5 class="offcanvas-title ms-2">PIZZASHOP</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="nav flex-column">
+        <li class="nav-item mt-2">
+          <a class="nav-link text-danger d-flex align-items-center" href="dashboard.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-border-all"
+              viewBox="0 0 16 16">
+              <path d="M0 0h16v16H0zm1 1v6.5h6.5V1zm7.5 0v6.5H15V1zM15 8.5H8.5V15H15zM7.5 15V8.5H1V15z" />
+            </svg>
+            <span class="ms-2">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="UserList.html">
+            <img src="images/user.png" alt="" height="18" width="18" class="me-2" />
+            <span>Users</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="Permission.html">
+            <img src="images/key.png" alt="" height="18" width="18" class="me-2" />
+            <span>Role And Permission</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="menu.html">
+            <img src="images/menu.png" alt="" height="18" width="18" class="me-2" />
+            <span>Menu</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="#user">
+            <img src="images/icons8-rectangle-50.png" alt="" height="18" width="18" class="me-2" />
+            <span>Table and Section</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="#maintenance">
+            <img src="images/tax.png" alt="" height="18" width="18" class="me-2" />
+            <span>Taxes and Fees</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="#maintenance">
+            <img src="images/icons8-order-50.png" alt="" height="18" width="18" class="me-2" />
+            <span>Order</span>
+          </a>
+        </li>
+        <li class="nav-item mt-2">
+          <a class="nav-link text-dark d-flex align-items-center" href="#settings">
+            <img src="images/client_5895695.png" alt="" height="18" width="18" class="me-2" />
+            <span>Customer</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mt-4" id="main-content">
+    <nav class="navbar w-90 navbar-light bg-light">
+      <h3 class="text-primary">Add New User</h3>
+      <form class="form-inline">
+        <div class="d-flex">
+
+
+          <div class="">
+            <button class="btn btn-outline-secondary bg-light my-sm-0 rounded  text-primary" type="submit"><a
+                href="UserList.html"> Back</a></button>
+          </div>
+        </div>
+      </form>
+    </nav>
+    <div class="form-control">
+
+
+      <div class="my-4">
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Last name">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="my-4">
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="User name">
+            </div>
+            <div class="col">
+              <select class="form-select  col-12 col-lg-12" style="height: 40px;" aria-label="Default select example">
+                <option selected>Dropdown</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="my-4">
+        <form>
+          <div class="row">
+            <div class="col">
+              <input type="email" class="form-control" placeholder="Email">
+            </div>
+            <div class="col">
+              <input type="password" class="form-control" placeholder="password">
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+      <div class="upload-box w-100 mt-0 border border-secondary">
+        <img src="/Pizza_Shop/images/download-from-cloud_icon-icons.com_54289.png" height="30" width="30" alt="">
+        <form>
+          <div class="form-group">
+            <input type="file" class="form-control-file" id="fileUpload">
+
+          </div>
+
+        </form>
+      </div>
+
+      <div class="">
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <select class=" form-select  col-12 col-lg-12" style="height: 40px;" aria-label="Default select example">
+                <option selected>Country</option>
+                <option value="1">India</option>
+                <option value="2">China</option>
+                <option value="3">Us</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <select class=" form-select  col-12 col-lg-12" style="height: 40px;" aria-label="Default select example">
+                <option selected>State</option>
+                <option value="1">Gujrat</option>
+                <option value="2">Rajsthan</option>
+                <option value="3">UP</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <select class=" form-select  col-12 col-lg-12" style="height: 40px;" aria-label="Default select example">
+                <option selected>City</option>
+                <option value="1">Bvn</option>
+                <option value="2">Ahm</option>
+                <option value="3">None</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-4">
+
+              <input type="number" class="form-control" id="Zipcode" placeholder="Zipcode">
+            </div>
+
+            <div class="col-md-4">
+
+              <input type="text" class="form-control" id="address" placeholder="Address">
+            </div>
+
+            <div class="col-md-4">
+
+              <input type="tel" class="form-control" id="phone" placeholder="Phone">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-secondary">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>

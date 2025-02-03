@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="/Pizza_Shop/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Pizza_Shop/css/style.css">
+
+    <script src="/Pizza_Shop/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /*table Responsive in user list*/
+        @media only screen and (min-width: 768px) {
+            .menu_table table {
+                table-layout: fixed;
+                max-width: 100% !important;
+            }
+        }
+
+        thead {
+            background: #ddd;
+        }
+
+        td:nth-child(2) {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        @media only screen and (max-width: 767px) {
+
+            /* Force table to not be like tables anymore */
+            .menu_table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            /* Hide table headers (but not display: none;, for accessibility) */
+            .menu_table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            .menu_table td {
+                /* Behave  like a "row" */
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50% !important;
+            }
+
+            .menu_table td:before {
+                /* Now like a table header */
+                position: absolute;
+                /* Top/left values mimic padding */
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+            }
+
+            .menu_table td:nth-child(1) {
+                background: #ccc;
+                height: 100%;
+                top: 0;
+                left: 0;
+                font-weight: bold;
+            }
+
+            /*
+Label the data
+*/
+            .menu_table td:nth-of-type(1):before {
+                content: "Checkbox";
+            }
+
+            .menu_table td:nth-of-type(2):before {
+                content: "Name";
+            }
+
+            .menu_table td:nth-of-type(3):before {
+                content: "Item Type";
+            }
+
+            .menu_table td:nth-of-type(4):before {
+                content: "Rate";
+            }
+
+            .menu_table td:nth-of-type(5):before {
+                content: "Quantity";
+            }
+
+            .menu_table td:nth-of-type(6):before {
+                content: "Available";
+            }
+
+            .menu_table td:nth-of-type(7):before {
+                content: "Action";
+            }
+
+            .dataTables_length {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <!-- Sidebar Toggle Button -->
+            <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+                aria-controls="sidebar">
+                ☰
+            </button>
+            <a class="navbar-brand ms-3" href="#"><img src="/Pizza_Shop/images/account.png" height="35px" width="35px"
+                    alt=""></a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="offcanvas d-lg-block offcanvas-start bg-light" style="width: 233px;" id="sidebar">
+        <div class="offcanvas-header">
+            <img src="/Pizza_Shop/images/logos/pizzashop_logo.png" height="38px" width="38px" alt="">
+            <h5 class="offcanvas-title ms-2">PIZZASHOP</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="nav flex-column">
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-danger d-flex align-items-center" href="dashboard.html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-border-all" viewBox="0 0 16 16">
+                            <path d="M0 0h16v16H0zm1 1v6.5h6.5V1zm7.5 0v6.5H15V1zM15 8.5H8.5V15H15zM7.5 15V8.5H1V15z" />
+                        </svg>
+                        <span class="ms-2">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="UserList.html">
+                        <img src="images/user.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Users</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="Permission.html">
+                        <img src="images/key.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Role And Permission</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="menu.html">
+                        <img src="images/menu.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Menu</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#user">
+                        <img src="images/icons8-rectangle-50.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Table and Section</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#maintenance">
+                        <img src="images/tax.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Taxes and Fees</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#maintenance">
+                        <img src="images/icons8-order-50.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Order</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-2">
+                    <a class="nav-link text-dark d-flex align-items-center" href="#settings">
+                        <img src="images/client_5895695.png" alt="" height="18" width="18" class="me-2" />
+                        <span>Customer</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-4" id="main-content">
+        <div class="header">
+            <h3>Menu</h3>
+        </div>
+
+        <ul class="nav p-2 nav-tabs " id="menuTabs">
+            <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#items"><img
+                        src="/Pizza_Shop/images/add-list.png" height="24" width="24" alt=""> Items</a> </li>
+            <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#modifiers"> <img
+                        src="/Pizza_Shop/images/triangle_11004056.png" height="24" width="24" alt=""> Modifiers</a></li>
+        </ul>
+        <div class="tab-content mt-3">
+            <div class="tab-pane fade show active" id="items">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item active">Category <button
+                                    class="btn btn-sm btn-primary border float-end" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"> +</button></a>
+
+                            <a class=" list-group-item  text-primary d-flex align-items-center" href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Sandwich
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item   text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Pasta
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item   text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Sides and Appetizers
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Salad
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Dips and sauces
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Pizza
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Desserts
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Burger
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h4 class="text-primary">Items</h4>
+                        <div class="d-flex  flex-row-reverse mb-2 ">
+                            <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"> New Item</button>
+                            <!--modal code-->
+
+
+                            <button class="btn border "> <img src="/Pizza_Shop/images/icons8-delete-80.png" height="24"
+                                    width="24" alt=""></button>
+
+                            <input type="text" class="form-control w-25" placeholder="Search..." id="searchBox">
+
+                        </div>
+                        <div class="table-container">
+                            <table class=" table table-bordered menu_table" id="menuTable">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th>Name</th>
+                                        <th>Item Type</th>
+                                        <th>Rate</th>
+                                        <th>Quantity</th>
+                                        <th>Available</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="menuTableBody">
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Margherita Pizza</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$12.99</td>
+                                        <td>15</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Chicken Sandwich</td>
+                                        <td><img src="/Pizza_Shop/images/Non veg.jpg" width="24" height="24" alt="">
+                                        </td>
+                                        <td>$8.99</td>
+                                        <td>20</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Spaghetti Bolognese</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$10.99</td>
+                                        <td>10</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Spaghetti Bolognese</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$10.99</td>
+                                        <td>10</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title g-white" id="exampleModalLabel">
+                                                Add Category</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-floating mb-3">
+                                                <input type="name" class="form-control" id="categoryname">
+                                                <label for="categoryname">Name</label>
+                                            </div>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" id="categorydescription"></textarea>
+                                                <label for="floatingTextarea">Description</label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <div class="">
+                                                <button type="button"
+                                                    class="btn btn-outline-primary navbar-color text-primary">Save</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-primary text-primary cancel-btn-color ms-1">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <select id="itemsPerPage" class="form-select w-auto">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                            <nav>
+                                <ul class="pagination" id="pagination">
+                                    <li class="page-item"><a class="page-link" href="#" id="prevPage">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#" id="currentPage">1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#" id="nextPage">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--modifiers-->
+            <div class="tab-pane fade " id="modifiers">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item active">Category <button
+                                    class="btn btn-sm btn-primary border float-end">+</button></a>
+                            <a class=" list-group-item  text-primary d-flex align-items-center" href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Sandwich
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item   text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Pasta
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item   text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Sides and Appetizers
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Salad
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Dips and sauces
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Pizza
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Desserts
+                                </div>
+                            </a>
+                            <a class="nav-link list-group-item  text-primary d-flex align-items-center"
+                                href="#dashboard">
+                                <img src="/Pizza_Shop/images/3dot.webp" height="20" width="20" alt="">
+                                <div class="p-1">
+                                    Burger
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h4 class="text-primary">Modifiers</h4>
+                        <div class="d-flex  flex-row-reverse mb-2 ">
+                            <button type="button" class="btn btn-primary " data-bs-toggle="modal"
+                                data-bs-target="#cardModal1"> + New Modifiers</button>
+                            <!--Modal code -->
+
+                            <button class="btn border "> <img src="/Pizza_Shop/images/icons8-delete-80.png" height="24"
+                                    width="24" alt=""></button>
+
+                            <input type="text" class="form-control w-25" placeholder="Search..." id="searchBox">
+
+                        </div>
+                        <div class="table-container">
+                            <table class=" table table-bordered " id="menuTable">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th>Name</th>
+                                        <th>Item Type</th>
+                                        <th>Rate</th>
+                                        <th>Quantity</th>
+                                        <th>Available</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="menuTableBody">
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Margherita Pizza</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$12.99</td>
+                                        <td>15</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Chicken Sandwich</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$8.99</td>
+                                        <td>20</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Spaghetti Bolognese</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$10.99</td>
+                                        <td>10</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>Spaghetti Bolognese</td>
+                                        <td><img src="/Pizza_Shop/images/Veg.jfif" width="24" height="24" alt=""></td>
+                                        <td>$10.99</td>
+                                        <td>10</td>
+                                        <td>
+                                            <div class="container mt-0">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="flexSwitchCheckDefault">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><button class="btn btn-sm "> <img
+                                                    src="/Pizza_Shop/images/icons8-pencil-50.png" class="mr-4"
+                                                    height="24" width="24" alt=""> </button>
+                                            <button class="btn btn-sm"> <img
+                                                    src="/Pizza_Shop/images/icons8-delete-80.png" height="24" width="24"
+                                                    class="" alt=""></button>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <select id="itemsPerPage" class="form-select w-auto">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                            <nav>
+                                <ul class="pagination" id="pagination">
+                                    <li class="page-item"><a class="page-link" href="#" id="prevPage">Previous</a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#" id="currentPage">1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#" id="nextPage">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
