@@ -1,49 +1,192 @@
-<!doctype html>
-<html lang="en">
+CREATE TABLE IF NOT EXISTS Roles (
+    role_id INT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
-<head>
-    <link rel="stylesheet" href="/Pizza_Shop/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/Pizza_Shop/css/style.css">
+CREATE TABLE IF NOT EXISTS Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    phone VARCHAR(20),
+    role_id INT NOT NULL,
+    status ENUM('Active', 'Inactive') DEFAULT 'Active',
+    country_id INT NOT NULL,
+    state_id INT NOT NULL,
+    city_id INT NOT NULL,
+    address_line1 VARCHAR(255),
+    zipcode VARCHAR(10),
+    address TEXT,
+    profile_image VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+);
 
-    <script src="/Pizza_Shop/js/bootstrap.bundle.min.js"></script>
-</head>
+CREATE TABLE IF NOT EXISTS Permissions (
+    permission_id INT AUTO_INCREMENT PRIMARY KEY,
+    role_id INT NOT NULL,
+    module VARCHAR(255) NOT NULL,
+    can_view BOOLEAN NOT NULL DEFAULT FALSE,
+    can_add_edit BOOLEAN NOT NULL DEFAULT FALSE,
+    can_delete BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (role_id) REFERENCES Roles(role_id)
+);
 
-<body>
+CREATE TABLE IF NOT EXISTS Countries (
+    country_id INT AUTO_INCREMENT PRIMARY KEY,
+    country_name VARCHAR(255) UNIQUE NOT NULL
+);
 
-    <div class="container">
-        <button type="button" class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#cardModal">
-            Create Category Modal
-        </button>
-        <div class="modal fade" id="cardModal" tabindex="-1" aria-labelledby="cardModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="cardModalLabel">
-                            Add Category
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
-                                    placeholder="Enter name">
-                            </div>
-                            <div class="form-group pt-1">
-                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                    placeholder="Description" rows="3"></textarea>
-                            </div>
-                            <div class="d-flex flex-row-reverse ">
-                                <button type="submit" class="btn border-primary text-primary pt-1 m-1">Cancel</button>
-                                <button type="submit" class="btn btn-primary pt-1">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+CREATE TABLE IF NOT EXISTS States (
+    state_id INT AUTO_INCREMENT PRIMARY KEY,
+    country_id INT NOT NULL,
+    state_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (country_id) REFERENCES Countries(country_id)
+);
 
-</html>
+CREATE TABLE IF NOT EXISTS Cities (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_id INT NOT NULL,
+    city_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (state_id) REFERENCES States(state_id)
+);
+
+CREATE TABLE IF NOT EXISTS Categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS MenuItems (
+    menu_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT NOT NULL,
+    item_name VARCHAR(255) NOT NULL,
+    item_type ENUM('Vegetarian', 'Non-Vegetarian', 'Vegan') NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    quantity INT NOT NULL,
+    unit VARCHAR(50) NOT NULL,
+    is_available BOOLEAN NOT NULL DEFAULT TRUE,
+    default_tax BOOLEAN NOT NULL DEFAULT FALSE,
+    tax_percentage DECIMAL(5, 2) NOT NULL,
+    short_code VARCHAR(50) NOT NULL,
+    description TEXT,
+    image_path VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (category_id) REFERENCES Categories(category_id)
+);
+
+CREATE TABLE IF NOT EXISTS ModifierGroups (
+    modifier_group_id INT AUTO_INCREMENT PRIMARY KEY,
+    modifier_group_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS Modifiers (
+    modifier_id INT AUTO_INCREMENT PRIMARY KEY,
+    modifier_group_id INT NOT NULL,
+    modifier_name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    unit VARCHAR(50) NOT NULL,
+    quantity INT NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (modifier_group_id) REFERENCES ModifierGroups(modifier_group_id)
+);
+
+CREATE TABLE IF NOT EXISTS MenuItemModifierGroup (
+    menu_item_id INT NOT NULL,
+    modifier_group_id INT NOT NULL,
+    PRIMARY KEY (menu_item_id, modifier_group_id),
+    FOREIGN KEY (menu_item_id) REFERENCES MenuItems(menu_item_id),
+    FOREIGN KEY (modifier_group_id) REFERENCES ModifierGroups(modifier_group_id)
+);
+
+CREATE TABLE IF NOT EXISTS ModifierGroupModifier (
+    modifier_group_id INT NOT NULL,
+    modifier_id INT NOT NULL,
+    PRIMARY KEY (modifier_group_id, modifier_id),
+    FOREIGN KEY (modifier_group_id) REFERENCES ModifierGroups(modifier_group_id),
+    FOREIGN KEY (modifier_id) REFERENCES Modifiers(modifier_id)
+);
+
+CREATE TABLE IF NOT EXISTS Tables (
+    table_id INT AUTO_INCREMENT PRIMARY KEY,
+    section_id INT NOT NULL,
+    table_name VARCHAR(255) NOT NULL,
+    capacity INT NOT NULL,
+    status ENUM('Available', 'Occupied') NOT NULL DEFAULT 'Available',
+    FOREIGN KEY (section_id) REFERENCES Sections(section_id)
+);
+
+CREATE TABLE IF NOT EXISTS Sections (
+    section_id INT AUTO_INCREMENT PRIMARY KEY,
+    section_name VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    table_id INT NOT NULL,
+    status ENUM('Pending', 'In Progress', 'Completed', 'Cancelled') NOT NULL DEFAULT 'Pending',
+    payment_mode ENUM('Cash', 'Card', 'Online') NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (table_id) REFERENCES Tables(table_id)
+);
+
+CREATE TABLE IF NOT EXISTS Order_Item (
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    item_id INT NOT NULL,
+    quantity INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (item_id) REFERENCES MenuItems(menu_item_id)
+);
+
+CREATE TABLE IF NOT EXISTS Tax (
+    tax_id INT AUTO_INCREMENT PRIMARY KEY,
+    tax_name VARCHAR(255) NOT NULL,
+    tax_type VARCHAR(255) NOT NULL,
+    tax_value DECIMAL(10, 2) NOT NULL,
+    is_default BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE IF NOT EXISTS Customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS Waiting_Tokens (
+    token_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    section_id INT NOT NULL,
+    no_of_persons INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    waiting_time INT,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (section_id) REFERENCES Sections(section_id)
+);
